@@ -1,0 +1,18 @@
+{
+	"configurations": [
+		{
+			"type": "java",
+			"name": "CodeLens (Launch) - ConsumerClass",
+			"request": "launch",
+			"mainClass": "com.rabbitmq.lab.ConsumerClass",
+			"projectName": "TestLabRabbitMq"
+		},
+		{
+			"type": "java",
+			"name": "CodeLens (Launch) - App",
+			"request": "launch",
+			"mainClass": "com.rabbitmq.lab.App",
+			"projectName": "TestLabRabbitMq"
+		}
+	]
+}

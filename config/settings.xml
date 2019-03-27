@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+	<error_log>app_error_log</error_log>
+	<info_log>app_info_log</info_log>
+	<host>192.168.56.102</host>
+	<port>15672</port>
+	<username>admin</username>
+	<password>administrator</password>
+	<!-- <uri>amqp://admin:administrator@192.168.56.102</uri> -->
+	<uri>amqp://admin:administrator@192.168.1.122</uri>
+	<ConnectionTimeout>5000</ConnectionTimeout>
+	<!-- <queue_name>test-Queue</queue_name> -->
+	<queue_name>hello</queue_name>
+</settings>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<items>
+    <item>
+        <code>12000</code>
+        <name>Samsung  620</name>
+        <price>9999</price>
+    </item>
+    <item>
+        <code>15000</code>
+        <name>NOKIA</name>
+        <price>19999</price>
+    </item>
+    <item>
+        <code>18000</code>
+        <name>HTC 620</name>
+        <price>29999</price>
+    </item>
+</items>
