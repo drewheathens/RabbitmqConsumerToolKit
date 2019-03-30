@@ -38,4 +38,25 @@ public class QueueManager {
 		return channel;
 
 	}
+
+	/**
+	 * passing in the queue name
+	 * 
+	 * @param connection
+	 * @param queue_name
+	 * @return
+	 * @throws IOException
+	 */
+	public Channel createChannel(Connection connection, String queue_name) throws IOException {
+		final Channel channel = connection.createChannel();
+
+		/**
+		 * queue => name of the queue , durable => Maintain connection even if there are
+		 * no messages , exclusive => Dont go away after publisher is done , autoDelete,
+		 * arguments
+		 */
+		channel.queueDeclare(queue_name, true, false, false, null);
+		return channel;
+
+	}
 }
