@@ -6,9 +6,12 @@
 	<port>15672</port>
 	<username>admin</username>
 	<password>administrator</password>
-	<!-- <uri>amqp://admin:administrator@192.168.56.102</uri> -->
-	<uri>amqp://admin:administrator@192.168.1.122</uri>
+	<uri>amqp://admin:administrator@192.168.56.102</uri>
+	<!-- <uri>amqp://admin:administrator@192.168.1.122</uri> -->
 	<ConnectionTimeout>5000</ConnectionTimeout>
-	<!-- <queue_name>test-Queue</queue_name> -->
-	<queue_name>hello</queue_name>
+	<CountryCode>MZ</CountryCode>
+	<channels>5</channels>
+	<prefetchSize>1</prefetchSize>
+	<queue_name>test-Queue</queue_name>
+	<ApplicationName>ConsumerLab</ApplicationName>
 </settings>

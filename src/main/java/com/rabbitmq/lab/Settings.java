@@ -1,7 +1,6 @@
 package com.rabbitmq.lab;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
 import java.io.File;
@@ -11,7 +10,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
 @XmlRootElement
-public class Settings {
+final public class Settings {
 
 	private String host;
 
@@ -30,6 +29,14 @@ public class Settings {
 	private String error_log;
 
 	private String info_log;
+
+	private int channels;
+
+	private int prefetchSize;
+
+	private String CountryCode;
+
+	private String ApplicationName;
 
 	public Settings() {
 	}
@@ -63,6 +70,38 @@ public class Settings {
 	}
 
 	/**
+	 * @param channels the channels to set
+	 */
+	@XmlElement
+	public void setChannels(int channels) {
+		this.channels = channels;
+	}
+
+	/**
+	 * @param prefetchSize the prefetchSize to set
+	 */
+	@XmlElement
+	public void setPrefetchSize(int prefetchSize) {
+		this.prefetchSize = prefetchSize;
+	}
+
+	/**
+	 * @param applicationName the applicationName to set
+	 */
+	@XmlElement
+	public void setApplicationName(String applicationName) {
+		ApplicationName = applicationName;
+	}
+
+	/**
+	 * @param countryCode the countryCode to set
+	 */
+	@XmlElement
+	public void setCountryCode(String countryCode) {
+		CountryCode = countryCode;
+	}
+
+	/**
 	 * @return the error_log
 	 */
 	public String getError_log() {
@@ -74,6 +113,13 @@ public class Settings {
 	 */
 	public String getInfo_log() {
 		return info_log;
+	}
+
+	/**
+	 * @return the channels
+	 */
+	public int getChannels() {
+		return channels;
 	}
 
 	/**
@@ -125,6 +171,20 @@ public class Settings {
 	}
 
 	/**
+	 * @return the prefetchSize
+	 */
+	public int getPrefetchSize() {
+		return prefetchSize;
+	}
+
+	/**
+	 * @return the applicationName
+	 */
+	public String getApplicationName() {
+		return ApplicationName;
+	}
+
+	/**
 	 * @return the host
 	 */
 
@@ -172,6 +232,17 @@ public class Settings {
 	 */
 	public String getUsername() {
 		return username;
+	}
+
+	/**
+	 * @return the countryCode
+	 */
+	public String getCountryCode() {
+		return CountryCode;
+	}
+
+	public Settings getSelf() {
+		return SettingsLoader.loadSettings();
 	}
 }
 

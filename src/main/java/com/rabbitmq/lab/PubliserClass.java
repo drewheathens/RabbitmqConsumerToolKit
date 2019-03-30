@@ -1,7 +1,6 @@
 package com.rabbitmq.lab;
 
 import com.rabbitmq.client.ConnectionFactory;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
@@ -10,6 +9,8 @@ import java.util.concurrent.TimeoutException;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
+
+// Used to publish to postpayment ack
 
 public class PubliserClass {
 
