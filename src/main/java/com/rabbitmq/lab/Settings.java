@@ -22,21 +22,19 @@ final public class Settings {
 
 	private String password;
 
-	private int ConnectionTimeout;
+	private int connectionTimeout;
 
 	private String queue_name;
-
-	private String error_log;
-
-	private String info_log;
 
 	private int channels;
 
 	private int prefetchSize;
 
-	private String CountryCode;
+	private String countryCode;
 
-	private String ApplicationName;
+	private String applicationName;
+
+	private String ack_queue;
 
 	public Settings() {
 	}
@@ -49,24 +47,15 @@ final public class Settings {
 	 */
 	@XmlElement
 	public void setConnectionTimeout(int connectionTimeout) {
-		ConnectionTimeout = connectionTimeout;
+		this.connectionTimeout = connectionTimeout;
 	}
 
 	/**
-	 * @param error_log the error_log to set
+	 * @param ack_queue the ack_queue to set
 	 */
 	@XmlElement
-	public void setError_log(String error_log) {
-		this.error_log = error_log;
-	}
-
-	/**
-	 * @param info_log the info_log to set
-	 */
-
-	@XmlElement
-	public void setInfo_log(String info_log) {
-		this.info_log = info_log;
+	public void setAck_queue(String ack_queue) {
+		this.ack_queue = ack_queue;
 	}
 
 	/**
@@ -90,7 +79,7 @@ final public class Settings {
 	 */
 	@XmlElement
 	public void setApplicationName(String applicationName) {
-		ApplicationName = applicationName;
+		this.applicationName = applicationName;
 	}
 
 	/**
@@ -98,21 +87,7 @@ final public class Settings {
 	 */
 	@XmlElement
 	public void setCountryCode(String countryCode) {
-		CountryCode = countryCode;
-	}
-
-	/**
-	 * @return the error_log
-	 */
-	public String getError_log() {
-		return error_log;
-	}
-
-	/**
-	 * @return the info_log
-	 */
-	public String getInfo_log() {
-		return info_log;
+		this.countryCode = countryCode;
 	}
 
 	/**
@@ -120,6 +95,13 @@ final public class Settings {
 	 */
 	public int getChannels() {
 		return channels;
+	}
+
+	/**
+	 * @return the ack_queue
+	 */
+	public String getAck_queue() {
+		return ack_queue;
 	}
 
 	/**
@@ -181,7 +163,7 @@ final public class Settings {
 	 * @return the applicationName
 	 */
 	public String getApplicationName() {
-		return ApplicationName;
+		return applicationName;
 	}
 
 	/**
@@ -203,7 +185,7 @@ final public class Settings {
 	 * @return the connectionTimeout
 	 */
 	public int getConnectionTimeout() {
-		return ConnectionTimeout;
+		return connectionTimeout;
 	}
 
 	/**
@@ -238,7 +220,7 @@ final public class Settings {
 	 * @return the countryCode
 	 */
 	public String getCountryCode() {
-		return CountryCode;
+		return countryCode;
 	}
 
 	public Settings getSelf() {

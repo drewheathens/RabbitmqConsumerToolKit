@@ -1,10 +1,9 @@
 com/rabbitmq/utils/Logging.class
 com/rabbitmq/lab/SettingsLoader.class
 com/rabbitmq/Dao/JobInterface.class
-com/rabbitmq/lab/PaymentAck.class
+com/rabbitmq/lab/PaymentAckPublisher.class
 com/rabbitmq/lab/QueueManager.class
 com/rabbitmq/lab/ConsumerEntry.class
-com/rabbitmq/lab/PubliserClass.class
 com/rabbitmq/utils/Utils.class
 com/rabbitmq/lab/ConsumerEntry$1.class
 com/rabbitmq/Dao/AckDAO.class

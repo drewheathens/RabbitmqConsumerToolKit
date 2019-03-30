@@ -44,7 +44,7 @@ public abstract class ConsumerEntry implements Daemon, Runnable {
 	public ConsumerEntry() {
 		this.settings = new Settings().getSelf();
 		this.logging = new Logging(this.getClass());
-		this.queueManager = new QueueManager(this.logging);
+		this.queueManager = new QueueManager();
 
 	}
 
@@ -63,8 +63,8 @@ public abstract class ConsumerEntry implements Daemon, Runnable {
 				// Request object mapping and Struct instanciate
 				PaymentDAO dao = classConst(requestObj);
 
-				logging.info(Utils.prelogString(dao, utilities.getCodelineNumber(), (long) 0.0,
-						envelope.getRoutingKey(), message));
+				logging.info(Utils.prelogString(dao, Utils.getCodelineNumber(), (long) 0.0, envelope.getRoutingKey(),
+						message));
 				String routingKey = envelope.getRoutingKey();
 				String contentType = properties.getContentType();
 				long deliveryTag = envelope.getDeliveryTag();
@@ -72,17 +72,24 @@ public abstract class ConsumerEntry implements Daemon, Runnable {
 				job.setDAO(dao);
 				Future<AckDAO> response = exec.submit(job);
 				try {
-					// response.get(200, TimeUnit.MICROSECONDS)
-					logging.info(Utils.prelogString(dao, utilities.getCodelineNumber(), (long) 0.0,
-							envelope.getRoutingKey(), response.get(2000, TimeUnit.MICROSECONDS).toString()));
+					// Processing Ack
+					PaymentAckPublisher payment = new PaymentAckPublisher(response.get(2000, TimeUnit.MICROSECONDS));
+
+					if (!payment.publishPaymentAck()) {
+						logging.error(Utils.prelogString(dao, Utils.getCodelineNumber(), (long) 0.0,
+								"Publishing Failed", response.get(2000, TimeUnit.MICROSECONDS).toString()));
+					} else {
+						logging.info(Utils.prelogString(dao, Utils.getCodelineNumber(), (long) 0.0,
+								"Publishing Success", response.get(2000, TimeUnit.MICROSECONDS).toString()));
+					}
 				} catch (InterruptedException e) {
-					logging.error(Utils.prelogString(dao, utilities.getCodelineNumber(), (long) 0.0, "Exception => ",
+					logging.error(Utils.prelogString(dao, Utils.getCodelineNumber(), (long) 0.0, "Exception => ",
 							"Interrupted Exception => " + e.getLocalizedMessage()));
 				} catch (ExecutionException e) {
-					logging.error(Utils.prelogString(dao, utilities.getCodelineNumber(), (long) 0.0, "Exception => ",
+					logging.error(Utils.prelogString(dao, Utils.getCodelineNumber(), (long) 0.0, "Exception => ",
 							"Execution Exception => " + e.getLocalizedMessage()));
 				} catch (TimeoutException e) {
-					logging.error(Utils.prelogString(dao, utilities.getCodelineNumber(), (long) 0.0, "Exception =>",
+					logging.error(Utils.prelogString(dao, Utils.getCodelineNumber(), (long) 0.0, "Exception =>",
 							"Timeout Exception => " + e.getLocalizedMessage()));
 				}
 				channel.basicAck(envelope.getDeliveryTag(), false);
@@ -107,47 +114,46 @@ public abstract class ConsumerEntry implements Daemon, Runnable {
 	public void init(DaemonContext context) throws DaemonInitException, Exception {
 		mainThread = new Thread(this);
 		utilities = new Utils(settings);
-		logging = new Logging(getClass());
-		queueManager = new QueueManager(this.logging);
-		// (PaymentDAO dataStruct, int lineNumber, long tat, String status,String
-		// logMessage)
-		logging.info(Utils.prelogString(new PaymentDAO(), utilities.getCodelineNumber(), (long) 0.00, "Not status",
-				"Initializing " + settings.getApplicationName() + " consumer..."));
+		logging = new Logging(this.getClass());
+		logging.info("Initializing " + settings.getApplicationName() + " service");
+		// logging.info(Utils.prelogString(new PaymentDAO(), Utils.getCodelineNumber(),
+		// (long) 0.00, "Not status",
+		// "Initializing " + settings.getApplicationName() + " consumer..."));
 
 	}
 
 	public void start() throws Exception {
 		mainThread.start();
-		logging.info(utilities.prelogString(utilities.getCodelineNumber(), "Starting consumer..."));
+		logging.info(utilities.prelogString(Utils.getCodelineNumber(), "Starting consumer..."));
 
 	}
 
 	public void stop() throws Exception {
-		logging.info(utilities.prelogString(utilities.getCodelineNumber(), "Stoping consumer..."));
+		logging.info(utilities.prelogString(Utils.getCodelineNumber(), "Stoping consumer..."));
 		messageExecutor.shutdown();
 		String message;
 		try {
 			do {
 				messageExecutor.awaitTermination(60, TimeUnit.SECONDS);
 				message = "Waiting for the transaction to finish. pool: " + messageExecutor.hashCode();
-				logging.info(utilities.prelogString(utilities.getCodelineNumber(), message));
+				logging.info(utilities.prelogString(Utils.getCodelineNumber(), message));
 			} while (!messageExecutor.isTerminated());
 			messageExecutor.shutdownNow();
 			message = "Executor executorService terminated successfully. pool:" + messageExecutor.hashCode();
-			logging.info(utilities.prelogString(utilities.getCodelineNumber(), message));
+			logging.info(utilities.prelogString(Utils.getCodelineNumber(), message));
 		} catch (InterruptedException exception) {
 			message = "Executor executorService shutdown error:" + exception.getMessage();
-			logging.error(utilities.prelogString(utilities.getCodelineNumber(), message));
+			logging.error(utilities.prelogString(Utils.getCodelineNumber(), message));
 			messageExecutor.shutdownNow();
 			Thread.currentThread().interrupt();
 		}
-		logging.info(utilities.prelogString(utilities.getCodelineNumber(),
-				settings.getApplicationName() + " consumer stopped"));
+		logging.info(
+				utilities.prelogString(Utils.getCodelineNumber(), settings.getApplicationName() + " consumer stopped"));
 
 	}
 
 	public void destroy() {
-		logging.info(utilities.prelogString(utilities.getCodelineNumber(),
+		logging.info(utilities.prelogString(Utils.getCodelineNumber(),
 				"Destroying " + settings.getApplicationName() + " consumer..."));
 
 	}
@@ -158,6 +164,8 @@ public abstract class ConsumerEntry implements Daemon, Runnable {
 		try {
 			messageExecutor = Executors.newFixedThreadPool(settings.getPrefetchSize());
 			int channels = settings.getChannels();
+			// logging.info(utilities.prelogString(Utils.getCodelineNumber(), "Channels
+			// setup starting..."));
 			logging.info("Channels setup starting...");
 			// Create connection outside loop to have all the chanels in one connection
 			// Else create connection inside loop to have each connection with a channel
@@ -165,6 +173,8 @@ public abstract class ConsumerEntry implements Daemon, Runnable {
 			for (int i = 1; i <= channels; i++) {
 				JobInterface job = loadJob();
 				this.consume(messageExecutor, job, connection);
+				// logging.info(utilities.prelogString(Utils.getCodelineNumber(),
+				// "Channel number : " + i + "=> Accepting connections"));
 				logging.info("Channel number : " + i + "=> Accepting connections");
 			}
 

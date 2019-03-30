@@ -15,11 +15,7 @@ import com.rabbitmq.client.ConnectionFactory;
 public class QueueManager {
 
 	private final Settings settings = SettingsLoader.loadSettings();
-	private final transient Logging log;
-
-	public QueueManager(Logging logging) {
-		this.log = logging;
-	}
+	private final transient Logging log = new Logging(this.getClass());
 
 	public Connection createConnection()
 			throws KeyManagementException, NoSuchAlgorithmException, URISyntaxException, IOException, TimeoutException {

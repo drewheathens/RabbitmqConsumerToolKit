@@ -60,12 +60,21 @@ public class Utils {
 				+ status + logMessage;
 	}
 
+	public static String prelogString(String dataStruct, int lineNumber, long tat, String status, String logMessage) {
+		String fullClassName = Thread.currentThread().getStackTrace()[2].getClassName();
+		String file = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
+		String method = Thread.currentThread().getStackTrace()[2].getMethodName();
+		return " | COUNTRYCODE:" + properties.getCountryCode() + " | MESSAGETYPE:" + properties.getApplicationName()
+				+ " | FILE:" + file + " | FUNCTION:" + method + " | LINE:" + lineNumber + " | TAT:" + tat + " | STATUS:"
+				+ status + " | PAYLOAD : " + dataStruct + "| LOGMESSAGE : " + logMessage;
+	}
+
 	/**
 	 * getCodelineNumber
 	 *
 	 * @return lineNumber
 	 */
-	public int getCodelineNumber() {
+	public static int getCodelineNumber() {
 		int lineNumber = Thread.currentThread().getStackTrace()[2].getLineNumber();
 		return lineNumber;
 	}
