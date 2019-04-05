@@ -1,24 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <build>
-  <!-- Compile all to one jar -->
-  <plugins>
-    <plugin>
-      <artifactId>maven-assembly-plugin</artifactId>
-      <configuration>
-        <archive>
-          <manifest>
-            <mainClass></mainClass><!-- package com.rabbitmq.lab.ConsumerEntry -->
-          </manifest>
-        </archive>
-        <descriptorRefs>
-          <descriptorRef>jar-with-dependencies</descriptorRef>
-        </descriptorRefs>
-      </configuration>
-</plugin>
-</plugins>
+	<build>
+	<!-- Compile all to one jar -->
+		<plugins>
+			<plugin>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<configuration>
+					<archive>
+						<manifest>
+						<mainClass></mainClass><!-- package com.rabbitmq.lab.ConsumerEntry -->
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					</configuration>
+			</plugin>
+		</plugins>
 
-  </build>
+	</build>
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.rabbitmq.lab</groupId>
   <artifactId>TestLabRabbitMq</artifactId>
