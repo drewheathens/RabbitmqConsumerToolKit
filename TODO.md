@@ -13,3 +13,6 @@ Process to follow for none xml i.e. json responses is different and not handled
 
 Add logs throughout the application
 
+Handling failed posts
+
+Post headers addition to settings

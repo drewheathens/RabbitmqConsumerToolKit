@@ -14,11 +14,12 @@ import com.rabbitmq.client.ConnectionFactory;
 
 public class QueueManager {
 
-	private final Settings settings = SettingsLoader.loadSettings();
-	private final transient Logging log = new Logging(this.getClass());
+	private final static transient Settings settings = SettingsLoader.loadSettings();
+	private final static transient Logging log = new Logging(QueueManager.class);
 
 	public Connection createConnection()
 			throws KeyManagementException, NoSuchAlgorithmException, URISyntaxException, IOException, TimeoutException {
+		log.info("Creating connection");
 		ConnectionFactory factory = new ConnectionFactory();
 		factory.setUri(settings.getUri());
 		factory.setConnectionTimeout(settings.getConnectionTimeout());

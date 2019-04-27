@@ -9,12 +9,22 @@
 	<uri>amqp://admin:administrator@192.168.56.102</uri>
 	<!-- <uri>amqp://admin:administrator@192.168.1.122</uri> -->
 	<connectionTimeout>2000</connectionTimeout>
-	<countryCode>MZ</countryCode>
+	<countrycode>{{COUNTRY_CODE}}</countrycode>
 	<channels>5</channels>
 	<prefetchSize>1</prefetchSize>
 	<queue_name>comsume_queue</queue_name>
-	<ack_queue>ack_queue</ack_queue>
-	<applicationName>ConsumerLab</applicationName>
+	<ack_queue>ackQueue</ack_queue>
+	<applicationname>{{APP_NAME}}</applicationname>
+	<httpsuccess>200</httpsuccess>
+	<api_password>{{PASSWORD}}</api_password>
+	<api_username>{{USERNAME}}</api_username>
+	<successAckCode>140</successAckCode>
+	<failedAckCode>141</failedAckCode>
+	<httpHeaders>{{HTTP_HEADERS}}</httpHeaders>
+
+	<thirdpartysuccesscode>{{THIRD_PARTY_SUCCESSSCODE}}</thirdpartysuccesscode>
+	<isxml>false</isxml>
+
 
 	<!-- Consuming job class configs -->
 	<request_template_path>{TEMPLATE_PATH}</request_template_path>
@@ -22,8 +32,9 @@
 	<map_key>{REQUEST_MAP_KEYS}</map_key>
 
 	<!-- st_companyCode:en_companyCode~serviceCode,st_username:en_username~username,st_accountNumber:en_accountNumber~account,st_password:en_password~password -->
-	<response_template_path>{RESPONSE_TEMPLATE}</response_template_path>
-	<starttag>st</starttag>
-	<endtag>en</endtag>
+	<response_template>{RESPONSE_TEMPLATE}</response_template>
+	<!-- Below only if xml -->
+	<starttag>{{START_TAG}}</starttag> 
+	<endtag>{{END_TAG}}</endtag>
 	<!-- Add mime type to differentiate responses or handle it in string creation -->
 </settings>

@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
 
 import java.io.File;
+import java.util.HashMap;
 
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.JAXBContext;
@@ -16,6 +17,16 @@ final public class Settings {
 
 	private String port;
 
+	private Boolean isxml;
+
+	private String api_password;
+
+	private String api_username;
+
+	private String httpsuccess;
+
+	private String thirdpartysuccesscode;
+
 	private String uri;
 
 	private String username;
@@ -26,13 +37,19 @@ final public class Settings {
 
 	private String queue_name;
 
+	private String response_template;
+
+	private String successAckCode;
+
+	private String failedAckCode;
+
 	private int channels;
 
 	private int prefetchSize;
 
-	private String countryCode;
+	private String countrycode;
 
-	private String applicationName;
+	private String applicationname;
 
 	private String ack_queue;
 
@@ -41,6 +58,12 @@ final public class Settings {
 	private String request_template_path;
 
 	private String map_key;
+
+	private String starttag;
+
+	private String endtag;
+
+	private String httpHeaders;
 
 	public Settings() {
 	}
@@ -65,11 +88,53 @@ final public class Settings {
 	}
 
 	/**
+	 * @param isxml the isxml to set
+	 */
+	@XmlElement
+	public void setIsxml(Boolean isxml) {
+		this.isxml = isxml;
+	}
+
+	/**
 	 * @param channels the channels to set
 	 */
 	@XmlElement
 	public void setChannels(int channels) {
 		this.channels = channels;
+	}
+
+	/**
+	 * @param thirdpartysuccesscode the thirdpartysuccesscode to set
+	 */
+	@XmlElement
+	public void setThirdpartysuccesscode(String thirdpartysuccesscode) {
+		this.thirdpartysuccesscode = thirdpartysuccesscode;
+	}
+
+	/**
+	 * @return the thirdpartysuccesscode
+	 */
+	public String[] getExternalsuccesscode() {
+		return thirdpartysuccesscode.trim().split("\\s*~\\s*");
+	}
+
+	/**
+	 * @param httpHeaders the httpHeaders to set
+	 */
+	@XmlElement
+	public void setHttpHeaders(String httpHeaders) {
+		this.httpHeaders = httpHeaders;
+	}
+
+	public HashMap<String, String> getHTTPHeaders() {
+		HashMap<String, String> formatted = new HashMap<String, String>();
+		String[] headers = httpHeaders.trim().split("\\s*,\\s*");
+		for (String header : headers) {
+			String[] headerKeyValue = header.trim().split("\\s*:\\s*");
+			formatted.put(headerKeyValue[0], headerKeyValue[1]);
+		}
+		return formatted;
+
 	}
 
 	/**
@@ -81,19 +146,88 @@ final public class Settings {
 	}
 
 	/**
-	 * @param applicationName the applicationName to set
+	 * @param httpsuccess the httpsuccess to set
 	 */
 	@XmlElement
-	public void setApplicationName(String applicationName) {
-		this.applicationName = applicationName;
+	public void setHttpsuccess(String httpsuccess) {
+		this.httpsuccess = httpsuccess;
 	}
 
 	/**
-	 * @param countryCode the countryCode to set
+	 * @return the httpsuccess
+	 */
+	public String getHttpsuccess() {
+		return httpsuccess;
+	}
+
+	/**
+	 * @param endtag the endtag to set
 	 */
 	@XmlElement
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
+	public void setEndtag(String endtag) {
+		this.endtag = endtag;
+	}
+
+	/**
+	 * @param failedAckCode the failedAckCode to set
+	 */
+	@XmlElement
+	public void setFailedAckCode(String failedAckCode) {
+		this.failedAckCode = failedAckCode;
+	}
+
+	/**
+	 * @param successAckCode the successAckCode to set
+	 */
+	@XmlElement
+	public void setSuccessAckCode(String successAckCode) {
+		this.successAckCode = successAckCode;
+	}
+
+	/**
+	 * @return the failedAckCode
+	 */
+	public String getFailedAckCode() {
+		return failedAckCode;
+	}
+
+	/**
+	 * @return the successAckCode
+	 */
+	public String getSuccessAckCode() {
+		return successAckCode;
+	}
+
+	/**
+	 * @param response_template the response_template to set
+	 */
+	@XmlElement
+	public void setResponse_template(String response_template) {
+		this.response_template = response_template;
+	}
+
+	/**
+	 * @param api_password the api_password to set
+	 */
+	@XmlElement
+	public void setApi_password(String api_password) {
+		this.api_password = api_password;
+	}
+
+	/**
+	 * @param api_username the api_username to set
+	 */
+	@XmlElement
+	public void setApi_username(String api_username) {
+		this.api_username = api_username;
+	}
+
+	/**
+	 * @param starttag the starttag to set
+	 */
+	@XmlElement
+	public void setStarttag(String starttag) {
+		this.starttag = starttag;
 	}
 
 	/**
@@ -101,6 +235,48 @@ final public class Settings {
 	 */
 	public int getChannels() {
 		return channels;
+	}
+
+	/**
+	 * @return the endtag
+	 */
+	public String getEndtag() {
+		return endtag;
+	}
+
+	/**
+	 * @return the api_password
+	 */
+	public String getApi_password() {
+		return api_password;
+	}
+
+	/**
+	 * @return the api_username
+	 */
+	public String getApi_username() {
+		return api_username;
+	}
+
+	/**
+	 * @return the response_template
+	 */
+	public String getResponse_template() {
+		return response_template;
+	}
+
+	/**
+	 * @return the starttag
+	 */
+	public String getStarttag() {
+		return starttag;
+	}
+
+	/**
+	 * @return the isxml
+	 */
+	public Boolean getIsxml() {
+		return isxml;
 	}
 
 	/**
@@ -190,13 +366,6 @@ final public class Settings {
 	}
 
 	/**
-	 * @return the applicationName
-	 */
-	public String getApplicationName() {
-		return applicationName;
-	}
-
-	/**
 	 * @return the host
 	 */
 
@@ -268,15 +437,39 @@ final public class Settings {
 	}
 
 	/**
-	 * @return the countryCode
+	 * @param applicationname the applicationname to set
 	 */
-	public String getCountryCode() {
-		return countryCode;
+	@XmlElement
+	public void setApplicationname(String applicationname) {
+		this.applicationname = applicationname;
+	}
+
+	/**
+	 * @param countrycode the countrycode to set
+	 */
+	@XmlElement
+	public void setCountrycode(String countrycode) {
+		this.countrycode = countrycode;
 	}
 
 	public Settings getSelf() {
 		return SettingsLoader.loadSettings();
 	}
+
+	/**
+	 * @return the applicationname
+	 */
+	public String getApplicationname() {
+		return applicationname;
+	}
+
+	/**
+	 * @return the countrycode
+	 */
+	public String getCountrycode() {
+		return countrycode;
+	}
+
 }
 
 /**
