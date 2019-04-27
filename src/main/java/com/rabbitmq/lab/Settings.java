@@ -36,6 +36,12 @@ final public class Settings {
 
 	private String ack_queue;
 
+	private String post_url;
+
+	private String request_template_path;
+
+	private String map_key;
+
 	public Settings() {
 	}
 
@@ -145,6 +151,30 @@ final public class Settings {
 	}
 
 	/**
+	 * @param map_key the map_key to set
+	 */
+	@XmlElement
+	public void setMap_key(String map_key) {
+		this.map_key = map_key;
+	}
+
+	/**
+	 * @param post_url the post_url to set
+	 */
+	@XmlElement
+	public void setPost_url(String post_url) {
+		this.post_url = post_url;
+	}
+
+	/**
+	 * @param request_template_path the request_template_path to set
+	 */
+	@XmlElement
+	public void setRequest_template_path(String request_template_path) {
+		this.request_template_path = request_template_path;
+	}
+
+	/**
 	 * @param username the username to set
 	 */
 	@XmlElement
@@ -186,6 +216,27 @@ final public class Settings {
 	 */
 	public int getConnectionTimeout() {
 		return connectionTimeout;
+	}
+
+	/**
+	 * @return the map_key
+	 */
+	public String[] getMap_keys() {
+		return map_key.trim().split("\\s*,\\s*");
+	}
+
+	/**
+	 * @return the post_url
+	 */
+	public String getPost_url() {
+		return post_url;
+	}
+
+	/**
+	 * @return the request_template_path
+	 */
+	public String getRequest_template_path() {
+		return request_template_path;
 	}
 
 	/**

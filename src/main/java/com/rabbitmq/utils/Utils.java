@@ -1,17 +1,29 @@
 package com.rabbitmq.utils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import com.rabbitmq.Dao.PaymentDAO;
 import com.rabbitmq.lab.Settings;
+import org.apache.commons.lang3.StringUtils;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONObject;
 import org.json.XML;
 
@@ -135,19 +147,84 @@ public class Utils {
 		String reportDate = df.format(today);
 		return reportDate.split("\\s+");
 	}
-	// TODO:
-	// import org.apache.commons.lang3.StringUtils;
-	// public static String strBetwee(String full, String before, String after) {
-	// return StringUtils.substringBetween(full, before, after);
-	// }
+
+	public static String payloadForm(PaymentDAO pmntdao, Settings setup) throws IOException {
+		String template = readFile(setup.getRequest_template_path(), StandardCharsets.UTF_8);
+		HashMap<String, String> holder = pmntdao.mapedMap();
+		for (String val_map : setup.getMap_keys()) { // originates from settings
+			String[] map_isolated = val_map.trim().split("\\s*:\\s*");
+			template = template.replace(map_isolated[0], holder.get(map_isolated[1]));
+		}
+		return template;
+	}
 
 	/**
-	 *
-	 * @param jsonElement
+	 * Function processes post requests The returned variable is a map of the status
+	 * code and the response String
+	 * 
+	 * @param url
+	 * @param payload
+	 * @param mimeType
+	 * @param headers
 	 * @return
+	 * @throws IOException
 	 */
-	// public static String getNullAsEmptyString(JsonElement jsonElement) {
-	// return jsonElement.isJsonNull() ? "" : jsonElement.getAsString().trim();
-	// }
+	public static HashMap<String, String> updatedPostMethod(String url, String payload,
+			HashMap<String, String> headers) {
+
+		HashMap<String, String> response = new HashMap<String, String>();
+		CloseableHttpClient httpclient = HttpClientBuilder.create().build();
+		HttpPost httppost = new HttpPost(url);
+		CloseableHttpResponse responseBody = null;
+		int status = 0;
+
+		// Replace below with log
+		// System.out.println("Requesting : " + httppost.getURI());
+
+		try {
+			StringEntity entity = new StringEntity(payload, StandardCharsets.UTF_8);
+
+			for (String header : headers.keySet()) {
+				httppost.addHeader(header, headers.get(header));
+			}
+
+			httppost.setEntity(entity);
+
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			responseBody = httpclient.execute(httppost);
+
+			// Compare the 2 calls for body and response below
+			String body = responseHandler.handleResponse(responseBody);
+			// String body = EntityUtils.toString(responseBody.getEntity());
+			status = responseBody.getStatusLine().getStatusCode();
+			response.put("Status", "" + status);
+			response.put("Body", body);
+
+			// Log response below
+			// System.out.println("responseBody : " + responseBody);
+
+		} catch (UnsupportedEncodingException e) {
+			response.put("Status", "" + status);
+			response.put("Body", e.getStackTrace().toString());
+		} catch (ClientProtocolException e) {
+			response.put("Status", "" + status);
+			response.put("Body", e.getStackTrace().toString());
+		} catch (IOException e) {
+			response.put("Status", "" + status);
+			response.put("Body", e.getStackTrace().toString());
+		} finally {
+			try {
+				responseBody.close();
+			} catch (IOException e) {
+				response.put("Status", "" + status);
+				response.put("Body", e.getStackTrace().toString());
+			}
+		}
+		return response;
+
+	}
+	public static String strBetwee(String full, String before, String after) {
+		return StringUtils.substringBetween(full, before, after);
+	}
 
 }

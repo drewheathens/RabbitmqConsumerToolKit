@@ -15,4 +15,8 @@
 	<queue_name>comsume_queue</queue_name>
 	<ack_queue>ack_queue</ack_queue>
 	<applicationName>ConsumerLab</applicationName>
+	<request_template_path>{TEMPLATE_PATH}</request_template_path>
+	<post_url>{POST_URL}</post_url>
+	<map_key>{REQUEST_MAP_KEYS}</map_key>
+	<response_template_path>{RESPONSE_TEMPLATE}</response_template_path>
 </settings>
