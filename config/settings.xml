@@ -15,8 +15,15 @@
 	<queue_name>comsume_queue</queue_name>
 	<ack_queue>ack_queue</ack_queue>
 	<applicationName>ConsumerLab</applicationName>
+
+	<!-- Consuming job class configs -->
 	<request_template_path>{TEMPLATE_PATH}</request_template_path>
 	<post_url>{POST_URL}</post_url>
 	<map_key>{REQUEST_MAP_KEYS}</map_key>
+
+	<!-- st_companyCode:en_companyCode~serviceCode,st_username:en_username~username,st_accountNumber:en_accountNumber~account,st_password:en_password~password -->
 	<response_template_path>{RESPONSE_TEMPLATE}</response_template_path>
+	<starttag>st</starttag>
+	<endtag>en</endtag>
+	<!-- Add mime type to differentiate responses or handle it in string creation -->
 </settings>

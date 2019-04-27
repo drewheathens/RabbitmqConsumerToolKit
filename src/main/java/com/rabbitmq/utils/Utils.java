@@ -223,8 +223,60 @@ public class Utils {
 		return response;
 
 	}
-	public static String strBetwee(String full, String before, String after) {
-		return StringUtils.substringBetween(full, before, after);
+
+	/**
+	 * Extract response values from the response string to key values map
+	 * 
+	 * @param mapping
+	 * @param response
+	 * @param isXml    extraction of xml string is unique
+	 * @return
+	 */
+	public static HashMap<String, String> responseProcess(String mapping, String response, Boolean isXml) {
+
+		HashMap<String, String> extracted = new HashMap<String, String>();
+
+		for (String variables : mapping.trim().split("\\s*,\\s*")) {
+			String[] mapped = variables.trim().split("\\s*~\\s*");
+			String[] rep = mapped[0].trim().split("\\s*:\\s*");
+			String value = "";
+			if (isXml) {
+				value = StringUtils.substringBetween(response, createSubstrings(rep[0]), createSubstrings(rep[1]));
+			} else {
+				value = StringUtils.substringBetween(response, rep[0], rep[1]);
+			}
+			// if value is null throw error invalid mapping
+
+			extracted.put(mapped[1], value);
+			// System.out.println(extracted);
+		}
+
+		return extracted;
+	}
+
+	/**
+	 * Method recreates the search substrings if the response is an xml Given that
+	 * fitting an xml string with no closing tag in the xml setting file Breaks the
+	 * system Hence st anotates the start of a tag and en signifies
+	 * 
+	 * Function restricted to xml strings
+	 * 
+	 * @param str
+	 * @return gives the reconstructed xml substring
+	 */
+	public static String createSubstrings(String str) {
+		String toreturn = "";
+		for (String tag : str.trim().split("\\s*-\\s*")) {
+			String[] val = tag.trim().split("\\s*_\\s*");
+			if (val[0].equals("st")) {
+				toreturn += "<" + val[1] + ">";
+			} else if (val[0].equals("en")) {
+				toreturn += "</" + val[1] + ">";
+			} else {
+				return null;
+			}
+		}
+		return toreturn;
 	}
 
 }
