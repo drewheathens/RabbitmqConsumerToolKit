@@ -2,6 +2,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "CodeLens (Launch) - TestRunner",
+			"request": "launch",
+			"mainClass": "com.rabbitmq.lab.TestRunner",
+			"projectName": "TestLabRabbitMq"
+		},
+		{
+			"type": "java",
 			"name": "CodeLens (Launch) - ConsumerClass",
 			"request": "launch",
 			"mainClass": "com.rabbitmq.lab.ConsumerClass",
