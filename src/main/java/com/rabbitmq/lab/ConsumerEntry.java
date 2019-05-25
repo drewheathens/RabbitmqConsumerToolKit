@@ -31,19 +31,19 @@ import com.rabbitmq.client.Connection;
 public abstract class ConsumerEntry implements Daemon, Runnable {
 
 	private QueueManager queueManager;
-	private transient Settings settings;
-	private transient Logging logging;
+	private static final transient Settings settings = new Settings().getSelf();
+	// private transient Logging logging;
 	private ExecutorService messageExecutor;
 
 	public transient Utils utilities;
 
 	public transient Thread mainThread;
 
+	private static final transient Logging logging = new Logging(ConsumerEntry.class);
+
 	// private final JobInterface job;
 
 	public ConsumerEntry() {
-		this.settings = new Settings().getSelf();
-		this.logging = new Logging(this.getClass());
 		this.queueManager = new QueueManager();
 
 	}
@@ -113,9 +113,7 @@ public abstract class ConsumerEntry implements Daemon, Runnable {
 
 	public void init(DaemonContext context) throws DaemonInitException, Exception {
 		mainThread = new Thread(this);
-		utilities = new Utils(settings);
-		logging = new Logging(this.getClass());
-		logging.info("Initializing " + settings.getApplicationName() + " service");
+		logging.info("Initializing " + settings.getApplicationname() + " service");
 		// logging.info(Utils.prelogString(new PaymentDAO(), Utils.getCodelineNumber(),
 		// (long) 0.00, "Not status",
 		// "Initializing " + settings.getApplicationName() + " consumer..."));
@@ -148,13 +146,13 @@ public abstract class ConsumerEntry implements Daemon, Runnable {
 			Thread.currentThread().interrupt();
 		}
 		logging.info(
-				utilities.prelogString(Utils.getCodelineNumber(), settings.getApplicationName() + " consumer stopped"));
+				utilities.prelogString(Utils.getCodelineNumber(), settings.getApplicationname() + " consumer stopped"));
 
 	}
 
 	public void destroy() {
 		logging.info(utilities.prelogString(Utils.getCodelineNumber(),
-				"Destroying " + settings.getApplicationName() + " consumer..."));
+				"Destroying " + settings.getApplicationname() + " consumer..."));
 
 	}
 

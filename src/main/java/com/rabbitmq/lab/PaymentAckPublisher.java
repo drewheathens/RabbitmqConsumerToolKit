@@ -43,7 +43,7 @@ public class PaymentAckPublisher {
 			KeyManagementException, NoSuchAlgorithmException, URISyntaxException {
 		ConnectionFactory factory = new ConnectionFactory();
 		factory.setUri(settings.getUri());
-		factory.setConnectionTimeout(settings.getConnectionTimeout());
+		factory.setConnectionTimeout(settings.getTimeout());
 		Connection connection = factory.newConnection();
 		return connection;
 

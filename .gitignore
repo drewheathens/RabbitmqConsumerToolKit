@@ -1,5 +1,12 @@
 # Compiled class file
 *.class
+*.project
+.settings/
+.vscode/
+*.jar
+*.class
+target/
+
 
 # Log file
 *.log

@@ -15,12 +15,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Charles Otieno
  */
-@SuppressWarnings({ "FinalClass", "ClassWithoutLogger" })
+// @SuppressWarnings({ "FinalClass", "ClassWithoutLogger" })
 public final class Logging {
 	/**
 	 * Logger object.
 	 */
-	@SuppressWarnings("FieldMayBeFinal")
+	// @SuppressWarnings("FieldMayBeFinal")	
 	private Logger logger;
 
 	/**

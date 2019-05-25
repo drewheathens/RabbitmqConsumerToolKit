@@ -1,5 +1,7 @@
 package com.rabbitmq.Dao;
 
+import java.util.HashMap;
+
 import org.json.JSONObject;
 
 public class PaymentDAO {
@@ -129,6 +131,19 @@ public class PaymentDAO {
 	 */
 	public String getServiceCode() {
 		return serviceCode;
+	}
+
+	public HashMap<String, String> mapedMap() {
+		HashMap<String, String> maped = new HashMap<String, String>();
+		maped.put("merchantPaymentID", merchantPaymentID);
+		maped.put("serviceCode", serviceCode);
+		maped.put("payerClient", payerClient);
+		maped.put("payerClientCode", payerClientCode);
+		maped.put("customerMSISDN", customerMSISDN);
+		maped.put("extradata", extradata.toString());
+		maped.put("amount", amount + "");
+		maped.put("accountNumber", accountNumber);
+		return maped;
 	}
 
 }
