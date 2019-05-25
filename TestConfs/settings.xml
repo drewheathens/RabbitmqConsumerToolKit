@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <error_log>app_error_log</error_log>
+    <info_log>app_info_log</info_log>
+    <host>192.168.56.102</host>
+    <port>15672</port>
+    <username>admin</username>
+    <password>administrator</password>
+    <uri>amqp://admin:administrator@192.168.56.102</uri>
+    <!-- <uri>amqp://admin:administrator@192.168.1.122</uri> -->
+    <timeout>5000</timeout>
+    <countrycode>MZ</countrycode>
+    <channels>5</channels>
+    <prefetchSize>1</prefetchSize>
+    <queue_name>test-Queue</queue_name>
+    <applicationname>ConsumerLab</applicationname>
+    <httpsuccess>200</httpsuccess>
+    <api_password>password</api_password>
+    <api_username>username</api_username>
+    <successAckCode>140</successAckCode>
+    <failedAckCode>141</failedAckCode>
+    <httpHeaders>Content-type:application/json,</httpHeaders>
+    <ack_queue>ackQueue</ack_queue>
+    <request_template_path>templates/IdealPrepaid-Request.xml</request_template_path>
+    <post_url>http://localhost/simulator/index.php</post_url>
+    <map_key>PC:payerClient,AC:accountNumber,AMNT:amount,PCC:payerClientCode</map_key>
+    <response_template>st_description:en_description~description,
+        st_password:en_password~password,
+        st_recieptNumber:en_recieptNumber~recieptNumber,
+        st_receiverNarration:en_receiverNarration~receiverNarration,
+        st_username:en_username~username,
+        st_statusCode:en_statusCode~statusCode</response_template>
+    <isxml>true</isxml>
+    <thirdpartysuccesscode>st_statusCode:en_statusCode~210</thirdpartysuccesscode>
+    <starttag>st</starttag>
+    <endtag>en</endtag>
+</settings>
