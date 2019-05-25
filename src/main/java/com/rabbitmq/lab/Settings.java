@@ -33,7 +33,7 @@ final public class Settings {
 
 	private String password;
 
-	private int connectionTimeout;
+	private int timeout;
 
 	private String queue_name;
 
@@ -72,11 +72,11 @@ final public class Settings {
 	 * ************ Property getters ********************************
 	 */
 	/**
-	 * @param connectionTimeout the connectionTimeout to set
+	 * @param timeout the timeout to set
 	 */
 	@XmlElement
-	public void setConnectionTimeout(int connectionTimeout) {
-		this.connectionTimeout = connectionTimeout;
+	public void setTimeout(int timeout) {
+		this.timeout = timeout;
 	}
 
 	/**
@@ -381,10 +381,10 @@ final public class Settings {
 	}
 
 	/**
-	 * @return the connectionTimeout
+	 * @return the timeout
 	 */
-	public int getConnectionTimeout() {
-		return connectionTimeout;
+	public int getTimeout() {
+		return timeout;
 	}
 
 	/**
@@ -452,7 +452,7 @@ final public class Settings {
 		this.countrycode = countrycode;
 	}
 
-	public Settings getSelf() {
+	public static Settings getSelf() {
 		return SettingsLoader.loadSettings();
 	}
 

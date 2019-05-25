@@ -22,7 +22,7 @@ public class QueueManager {
 		log.info("Creating connection");
 		ConnectionFactory factory = new ConnectionFactory();
 		factory.setUri(settings.getUri());
-		factory.setConnectionTimeout(settings.getConnectionTimeout());
+		factory.setConnectionTimeout(settings.getTimeout());
 		Connection connection = factory.newConnection();
 		return connection;
 	}
