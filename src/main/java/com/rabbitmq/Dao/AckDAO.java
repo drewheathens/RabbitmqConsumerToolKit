@@ -16,13 +16,6 @@ public class AckDAO {
 	private String password;
 
 	/**
-	 * @param descriptionString the descriptionString to set
-	 */
-	public void setDescriptionString(String descriptionString) {
-		this.description = descriptionString;
-	}
-
-	/**
 	 * @param recieptNumber the recieptNumber to set
 	 */
 	public void setRecieptNumber(String recieptNumber) {
@@ -90,13 +83,6 @@ public class AckDAO {
 	 */
 	public String getUsername() {
 		return username;
-	}
-
-	/**
-	 * @return the descriptionString
-	 */
-	public String getDescriptionString() {
-		return description;
 	}
 
 	/**

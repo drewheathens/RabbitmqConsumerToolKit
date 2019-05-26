@@ -29,7 +29,7 @@ import org.json.XML;
 
 public class Utils {
 
-	private final static transient Settings properties = new Settings().getSelf();
+	private final static transient Settings properties = Settings.getSelf();
 
 	private final static transient Logging log = new Logging(Utils.class);
 

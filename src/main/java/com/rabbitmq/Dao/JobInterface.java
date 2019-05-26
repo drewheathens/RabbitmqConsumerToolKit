@@ -2,10 +2,6 @@ package com.rabbitmq.Dao;
 
 import java.util.concurrent.Callable;
 
-import com.rabbitmq.lab.Settings;
-import com.rabbitmq.utils.Logging;
-import com.rabbitmq.utils.Utils;
-
 /**
  * Abstaraction of Job
  */

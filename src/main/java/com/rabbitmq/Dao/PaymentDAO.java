@@ -1,5 +1,6 @@
 package com.rabbitmq.Dao;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 import org.json.JSONObject;
@@ -134,16 +135,24 @@ public class PaymentDAO {
 	}
 
 	public HashMap<String, String> mapedMap() {
-		HashMap<String, String> maped = new HashMap<String, String>();
-		maped.put("merchantPaymentID", merchantPaymentID);
-		maped.put("serviceCode", serviceCode);
-		maped.put("payerClient", payerClient);
-		maped.put("payerClientCode", payerClientCode);
-		maped.put("customerMSISDN", customerMSISDN);
-		maped.put("extradata", extradata.toString());
-		maped.put("amount", amount + "");
-		maped.put("accountNumber", accountNumber);
-		return maped;
-	}
+		HashMap<String, String> mapedMap = new HashMap<String, String>();
+		for (Field field : this.getClass().getDeclaredFields()) {
+			String val = new String();
+			String varname = field.getName();
+			try {
+				val = field.get(this) == null ? new String() : field.get(this) + "";
+				System.out.println(val);
+				mapedMap.put(varname, val);
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+			if (val.isEmpty()) {
+				throw new IllegalArgumentException(varname);
+			}
 
+		}
+		return mapedMap;
+	}
 }

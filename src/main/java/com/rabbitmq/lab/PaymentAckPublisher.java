@@ -16,7 +16,7 @@ public class PaymentAckPublisher {
 	// and sending to another queue of ack
 
 	private final AckDAO ackObj;
-	private final Settings settings = new Settings().getSelf();
+	private final Settings settings = Settings.getSelf();
 	private final Logging logging = new Logging(this.getClass());
 
 	public PaymentAckPublisher(AckDAO ackObj) {

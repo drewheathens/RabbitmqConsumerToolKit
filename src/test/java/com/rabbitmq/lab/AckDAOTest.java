@@ -1,6 +1,9 @@
 package com.rabbitmq.lab;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import com.rabbitmq.Dao.AckDAO;
 
 import org.junit.Test;
 
@@ -8,78 +11,53 @@ import org.junit.Test;
  * AckDAOTest
  */
 public class AckDAOTest {
+
+	private AckDAO ackObj = new AckDAO();
+
 	@Test
-	public void testsetDescriptionString() {
-		fail("Un Implemented");
+	public void testDescription() {
+		String expected = "Transaction was successfull";
+		ackObj.setDescription(expected);
+		assertEquals(expected, ackObj.getDescription());
 	}
 
 	@Test
-	public void testsetRecieptNumber() {
-		fail("Un Implemented");
+	public void testRecieptNumber() {
+		String expected = "MVN678TST";
+		ackObj.setRecieptNumber(expected);
+		assertEquals(expected, ackObj.getRecieptNumber());
 	}
 
 	@Test
-	public void testsetStatusCode() {
-		fail("Un Implemented");
+	public void testStatusCode() {
+		String expected = "200";
+		ackObj.setStatusCode(expected);
+		assertEquals(expected, ackObj.getStatusCode());
 	}
 
 	@Test
-	public void testsetDescription() {
-		fail("Un Implemented");
+	public void testPassword() {
+		String expected = "password";
+		ackObj.setPassword(expected);
+		assertEquals(expected, ackObj.getPassword());
 	}
 
 	@Test
-	public void testsetPassword() {
-		fail("Un Implemented");
+	public void testReceiverNarration() {
+		String expected = "Payment was a success";
+		ackObj.setReceiverNarration(expected);
+		assertEquals(expected, ackObj.getReceiverNarration());
 	}
 
 	@Test
-	public void testsetReceiverNarration() {
-		fail("Un Implemented");
+	public void testUsername() {
+		String expected = "administrator";
+		ackObj.setUsername(expected);
+		assertEquals(expected, ackObj.getUsername());
 	}
 
 	@Test
-	public void testsetUsername() {
-		fail("Un Implemented");
-	}
-
-	@Test
-	public void testgetDescription() {
-		fail("Un Implemented");
-	}
-
-	@Test
-	public void testgetPassword() {
-		fail("Un Implemented");
-	}
-
-	@Test
-	public void testgetReceiverNarration() {
-		fail("Un Implemented");
-	}
-
-	@Test
-	public void testgetUsername() {
-		fail("Un Implemented");
-	}
-
-	@Test
-	public void testgetDescriptionString() {
-		fail("Un Implemented");
-	}
-
-	@Test
-	public void testgetRecieptNumber() {
-		fail("Un Implemented");
-	}
-
-	@Test
-	public void testgetStatusCode() {
-		fail("Un Implemented");
-	}
-
-	@Test
-	public void testtoString() {
-		fail("Un Implemented");
+	public void testToString() {
+		assertTrue(ackObj.toString() instanceof String);
 	}
 }
