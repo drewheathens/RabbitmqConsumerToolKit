@@ -1,17 +1,22 @@
 package com.rabbitmq.lab;
 
+import org.json.JSONObject;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import static org.junit.Assert.*;
+
+import java.nio.charset.StandardCharsets;
+
+import com.rabbitmq.utils.Utils;
 
 /**
  * UtilsTest
  */
 public class UtilsTest {
-	@Test
-	public void testAdd() {
-		String str = "Junit is working fine";
-		assertEquals("Junit is working fine", str);
-	}
+	@Rule
+	public final ExpectedException exception = ExpectedException.none();
 
 	@Test
 	public void testPrelogString() {
@@ -20,32 +25,41 @@ public class UtilsTest {
 
 	@Test
 	public void testGetCodelineNumber() {
-		fail("Un implimented");
+		int expected = Utils.getCodelineNumber() + 1;
+		assertEquals(expected, Utils.getCodelineNumber());
 	}
 
 	@Test
 	public void testStringToJson() {
-		fail("Un implimented");
+		String expected = "{key:value}";
+		assertTrue(Utils.stringToJson(expected) instanceof JSONObject);
 	}
 
 	@Test
 	public void testRmNewlineTab() {
-		fail("Un implimented");
+		String expected = "Replace newline and tab with spaces";
+		String input = "Replace\n newline\t\n and\t tab\t with\n spaces";
+		assertEquals(expected, Utils.rmNewlineTab(input));
 	}
 
 	@Test
 	public void testXmlToJson() {
-		fail("Un implimented");
+		String xmlInput = "<header><title>title</title><body>request</body></header>";
+		JSONObject expected = new JSONObject("{header:{title:title,body:request}}");
+		assertEquals(expected.toString(), Utils.xmlToJson(xmlInput).toString());
 	}
 
 	@Test
 	public void testReadFile() {
-		fail("Un implimented");
+		assertTrue(Utils.readFile("templates/IdealPrepaid-Request.xml", StandardCharsets.UTF_8) instanceof String);
+		exception.expect(IllegalArgumentException.class);
+		assertTrue(Utils.readFile("path", StandardCharsets.UTF_8) instanceof String);
 	}
 
 	@Test
 	public void testDateToString() {
-		fail("Un implimented");
+		int expected = 2;
+		assertEquals(expected, Utils.dateToString().length);
 	}
 
 	@Test

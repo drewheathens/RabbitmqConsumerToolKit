@@ -74,8 +74,8 @@ public abstract class ConsumerEntry implements Daemon, Runnable {
 				try {
 					// Processing Ack
 					PaymentAckPublisher payment = new PaymentAckPublisher(response.get(2000, TimeUnit.MICROSECONDS));
-
-					if (!payment.publishPaymentAck()) {
+					// ;
+					if (!payment.publishToChannel()) {
 						logging.error(Utils.prelogString(dao, Utils.getCodelineNumber(), (long) 0.0,
 								"Publishing Failed", response.get(2000, TimeUnit.MICROSECONDS).toString()));
 					} else {

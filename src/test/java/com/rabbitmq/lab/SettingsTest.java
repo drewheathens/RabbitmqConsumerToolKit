@@ -13,10 +13,7 @@ import org.junit.Test;
 public class SettingsTest {
 	private Settings setup = SettingsLoader.loadSettings("TestConfs/settings.xml");
 
-	// @BeforeAll
-	// public void setUp() {
-	// setup =
-	// }
+	
 
 	@Test
 	public void testgetExternalsuccesscode() {

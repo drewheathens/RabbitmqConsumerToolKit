@@ -128,8 +128,13 @@ public class Utils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String readFile(String path, Charset encoding) throws IOException {
-		byte[] encoded = Files.readAllBytes(Paths.get(path));
+	public static String readFile(String path, Charset encoding) {
+		byte[] encoded = null;
+		try {
+			encoded = Files.readAllBytes(Paths.get(path));
+		} catch (IOException e) {
+			throw new IllegalArgumentException("Path not found : " + e.getMessage());
+		}
 		String tmplt = new String(encoded, encoding);
 		return tmplt;
 	}
@@ -139,12 +144,10 @@ public class Utils {
 	 * 
 	 * @return
 	 */
-	public String[] dateToString() {
-		log.info("Converting todays date and time to string array");
+	public static String[] dateToString() {
 		DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date today = Calendar.getInstance().getTime();
 		String reportDate = df.format(today);
-		log.info("Date to string conversion complete");
 		return reportDate.split("\\s+");
 	}
 
@@ -153,7 +156,7 @@ public class Utils {
 		String template = "";
 		try {
 			template = readFile(setup.getRequest_template_path(), StandardCharsets.UTF_8);
-		} catch (IOException e) {
+		} catch (IllegalArgumentException e) {
 			log.error("IOException" + e.getStackTrace());
 			return template;
 		}
@@ -189,7 +192,6 @@ public class Utils {
 		int status = 0;
 
 		// Replace below with log
-		// System.out.println("Requesting : " + httppost.getURI());
 
 		try {
 			StringEntity entity = new StringEntity(payload, StandardCharsets.UTF_8);
@@ -211,7 +213,6 @@ public class Utils {
 			response.put("Body", body);
 
 			// Log response below
-			// System.out.println("responseBody : " + responseBody);
 
 		} catch (UnsupportedEncodingException e) {
 			log.error("UnsupportedEncodingException @ " + e.getMessage());
@@ -272,7 +273,6 @@ public class Utils {
 			// if value is null throw error invalid mapping
 
 			extracted.put(mapped[1], value);
-			// System.out.println(extracted);
 		}
 		log.info("Fully processed response map => " + extracted);
 		return extracted;

@@ -141,7 +141,6 @@ public class PaymentDAO {
 			String varname = field.getName();
 			try {
 				val = field.get(this) == null ? new String() : field.get(this) + "";
-				System.out.println(val);
 				mapedMap.put(varname, val);
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
